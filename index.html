@@ -85,13 +85,13 @@
                 }
             } catch (error) {
                 console.error("Error:", error);
-                addMessage("bot", "Error: Could not retrieve Information.");
+                addMessage("bot", "Error: Could not retrieve information.");
             }
         }
 
         function addMessage(sender, message) {
             var chatBox = document.getElementById("chat-box");
-            var messageDiv = document.createElement("div"); 
+            var messageDiv = document.createElement("div");
             messageDiv.classList.add("message", sender);
             messageDiv.textContent = message;
             chatBox.appendChild(messageDiv);
