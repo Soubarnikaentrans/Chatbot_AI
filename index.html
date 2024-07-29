@@ -1,0 +1,215 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .chat-container {
+            width: 400px;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .chat-input {
+            width: calc(100% - 60px);
+            padding: 10px;
+        }
+        .chat-button {
+            width: 50px;
+            padding: 10px;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .message.user {
+            text-align: right;
+        }
+        .message.bot {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <input type="text" id="chat-input" class="chat-input" placeholder="Type a message..." />
+        <button id="chat-button" class="chat-button">Send</button>
+    </div>
+
+    <script>
+        document.getElementById("chat-button").addEventListener("click", sendMessage);
+        document.getElementById("chat-input").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            var input = document.getElementById("chat-input");
+            var message = input.value.trim();
+            if (message === "") return;
+
+            addMessage("user", message);
+            input.value = "";
+
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage("bot", data.response);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+            const userInput = document.getElementById('user-input').value;
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userInput })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('response').innerText = data.response;
+            } else {
+                console.error('Error:', response.statusText);
+            }
+        }
+
+        function addMessage(sender, message) {
+            var chatBox = document.getElementById("chat-box");
+            var messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", sender);
+            messageDiv.textContent = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
+         -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .chat-container {
+            width: 400px;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .chat-input {
+            width: calc(100% - 60px);
+            padding: 10px;
+        }
+        .chat-button {
+            width: 50px;
+            padding: 10px;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .message.user {
+            text-align: right;
+        }
+        .message.bot {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <input type="text" id="chat-input" class="chat-input" placeholder="Type a message..." />
+        <button id="chat-button" class="chat-button">Send</button>
+    </div>
+
+    <script>
+        document.getElementById("chat-button").addEventListener("click", sendMessage);
+        document.getElementById("chat-input").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            var input = document.getElementById("chat-input");
+            var message = input.value.trim();
+            if (message === "") return;
+
+            addMessage("user", message);
+            input.value = "";
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    addMessage("bot", data.response);
+                } else {
+                    console.error("Error:", response.statusText);
+                    addMessage("bot", "Error: Could not retrieve information.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                addMessage("bot", "Error: Could not retrieve Information.");
+            }
+        }
+
+        function addMessage(sender, message) {
+            var chatBox = document.getElementById("chat-box");
+            var messageDiv = document.createElement("div"); 
+            messageDiv.classList.add("message", sender);
+            messageDiv.textContent = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
