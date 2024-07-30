@@ -3,4 +3,3 @@ Gunicorn
 PyMuPDF
 nltk
 scikit-learn
-numpy
