@@ -1,5 +1,6 @@
-Flask
-requests
-scikit-learn
-PyMuPDF
-nltk
+Flask==3.0.3
+requests==2.32.3
+numpy==2.0.0
+scikit-learn==1.5.1  
+PyMuPDF==1.24.9
+nltk==3.8.1
