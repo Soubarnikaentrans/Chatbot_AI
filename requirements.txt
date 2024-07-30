@@ -2,5 +2,5 @@
 Gunicorn
 PyMuPDF
 nltk
-sklearn
+scikit-learn
 numpy
