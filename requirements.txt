@@ -1,7 +1,2 @@
 ﻿Flask
 Gunicorn
-PyMuPDF
-nltk
-scikit-learn
-requests
-numpy
