@@ -1,6 +1,5 @@
 Flask
 requests
-numpy
 scikit-learn
 PyMuPDF
 nltk
